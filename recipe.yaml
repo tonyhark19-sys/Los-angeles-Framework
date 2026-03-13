@@ -1,0 +1,70 @@
+$schema: https://raw.githubusercontent.com/tabarra/txAdmin-recipe-schema/master/schema.json
+
+name: Los Angeles Framework (Custom)
+version: 1.0.0
+author: TonyH
+description: Installiert das modulare LA Framework inkl. SQL Import und ensures.
+
+# WICHTIG:
+# 1) Ersetze unten bei "src" die GitHub Repo URL.
+# 2) Ersetze unten bei "ref" deinen Branch/Tag.
+# 3) Stelle sicher, dass oxmysql bereits als Resource vorhanden ist oder per txAdmin installiert wurde.
+
+tasks:
+  - action: download_github
+    src: https://github.com/DEINNAME/los-angeles-frame
+    ref: main
+    dest: ./tmp/la-framework
+
+  - action: move_path
+    src: ./tmp/la-framework/framework-utils
+    dest: ./resources/[local]/framework-utils
+
+  - action: move_path
+    src: ./tmp/la-framework/framework-core
+    dest: ./resources/[local]/framework-core
+
+  - action: move_path
+    src: ./tmp/la-framework/framework-jobs
+    dest: ./resources/[local]/framework-jobs
+
+  - action: move_path
+    src: ./tmp/la-framework/framework-inventory
+    dest: ./resources/[local]/framework-inventory
+
+  - action: move_path
+    src: ./tmp/la-framework/framework-admin
+    dest: ./resources/[local]/framework-admin
+
+  - action: move_path
+    src: ./tmp/la-framework/framework-hud
+    dest: ./resources/[local]/framework-hud
+
+  - action: connect_database
+
+  - action: query_database
+    file: ./tmp/la-framework/sql/schema.sql
+
+  - action: ensure
+    resource: oxmysql
+
+  - action: ensure
+    resource: framework-utils
+
+  - action: ensure
+    resource: framework-core
+
+  - action: ensure
+    resource: framework-jobs
+
+  - action: ensure
+    resource: framework-inventory
+
+  - action: ensure
+    resource: framework-admin
+
+  - action: ensure
+    resource: framework-hud
+
+  - action: remove_path
+    path: ./tmp/la-framework

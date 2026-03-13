@@ -1,0 +1,10 @@
+# Core requirements
+ensure oxmysql
+
+# Framework modules (start order)
+ensure framework-utils
+ensure framework-core
+ensure framework-jobs
+ensure framework-inventory
+ensure framework-admin
+ensure framework-hud
